@@ -35,7 +35,7 @@ object DataMapper {
                 longitude = it.longitude,
                 like = it.like,
                 image = it.image,
-                isFavorite = false
+                isFavorite = it.isFavorite
             )
         }
 
