@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
 @SuppressLint("CheckResult")
-abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
+abstract class NetworkBoundResource<ResultType, RequestType>() {
 
     private val result = PublishSubject.create<Resource<ResultType>>()
     private val mCompositeDisposable = CompositeDisposable()

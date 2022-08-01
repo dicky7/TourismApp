@@ -36,7 +36,7 @@ class TourismRepository private constructor(
     }
 
     override fun getAllTourism(): Flowable<Resource<List<Tourism>>> =
-        object : NetworkBoundResource<List<Tourism>, List<ListTourismResponse>>(appExecutors) {
+        object : NetworkBoundResource<List<Tourism>, List<ListTourismResponse>>() {
             override fun loadFromDB(): Flowable<List<Tourism>> {
                 return localDataSource.getAllTourism().map { DataMapper.mapEntitiesToDomain(it) }
             }
