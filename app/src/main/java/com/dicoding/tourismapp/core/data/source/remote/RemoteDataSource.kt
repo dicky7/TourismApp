@@ -5,11 +5,10 @@ import android.util.Log
 import com.dicoding.tourismapp.core.data.source.remote.network.ApiResponse
 import com.dicoding.tourismapp.core.data.source.remote.network.ApiService
 import com.dicoding.tourismapp.core.data.source.remote.response.ListTourismResponse
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource private constructor(private val apiService: ApiService) {
     companion object {
@@ -23,24 +22,24 @@ class RemoteDataSource private constructor(private val apiService: ApiService) {
     }
 
     @SuppressLint("CheckResult")
-    fun getAllTourism(): Flowable<ApiResponse<List<ListTourismResponse>>> {
-        val resultData = PublishSubject.create<ApiResponse<List<ListTourismResponse>>>()
+    fun getAllTourism(): Flow<ApiResponse<List<ListTourismResponse>>> {
 
         //get data from remote api
-        val client = apiService.getList()
-
-        client
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
-            .take(1)
-            .subscribe({response->
+        return flow {
+            try {
+                val response = apiService.getList()
                 val dataArray = response.places
-                resultData.onNext(if (dataArray.isNotEmpty()) ApiResponse.Success(dataArray) else ApiResponse.Empty)
-            }, {error->
-                resultData.onNext(ApiResponse.Error(error.message.toString()))
-                Log.e("RemoteDataSource", error.toString())
-            })
-        return resultData.toFlowable(BackpressureStrategy.BUFFER)
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(dataArray))
+                }
+                else{
+                    emit(ApiResponse.Empty)
+                }
+            }catch (e:Exception){
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
     }
 }
 
