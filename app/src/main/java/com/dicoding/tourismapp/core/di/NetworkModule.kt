@@ -11,8 +11,9 @@ import java.util.concurrent.TimeUnit
 
 @Module
 class NetworkModule {
+
     @Provides
-    fun provideOkHttpClient(): OkHttpClient{
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(120, TimeUnit.SECONDS)

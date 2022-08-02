@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
+
     @Singleton
     @Provides
     fun provideDatabase(context: Context): TourismDatabase = Room.databaseBuilder(
