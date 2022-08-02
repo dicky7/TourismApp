@@ -24,7 +24,6 @@ class HomeFragment : Fragment() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-
     private val homeViewModel: HomeViewModel by viewModels {
         factory
     }
