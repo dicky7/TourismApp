@@ -23,7 +23,8 @@ class DetailTourismActivity : AppCompatActivity() {
     }
 
     @Inject
-    private lateinit var factory: ViewModelFactory
+    lateinit var factory: ViewModelFactory
+
     private val detailTourismViewModel: DetailTourismViewModel by viewModels {
         factory
     }

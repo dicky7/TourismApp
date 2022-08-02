@@ -13,14 +13,16 @@ import javax.inject.Inject
 class ViewModelFactory @Inject constructor(private val tourismUseCase: TourismUseCase) :
     ViewModelProvider.NewInstanceFactory() {
 
-//    hapus kode
+//    hapus kode berikut
 //    companion object {
 //        @Volatile
 //        private var instance: ViewModelFactory? = null
 //
 //        fun getInstance(context: Context): ViewModelFactory =
 //            instance ?: synchronized(this) {
-//                instance ?: ViewModelFactory(Injection.provideTourismUseCase(context))
+//                instance ?: ViewModelFactory(
+//                    Injection.provideTourismUseCase(context)
+//                )
 //            }
 //    }
 
