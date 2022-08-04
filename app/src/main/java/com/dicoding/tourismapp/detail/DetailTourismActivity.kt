@@ -10,22 +10,24 @@ import com.dicoding.tourismapp.R
 import com.dicoding.tourismapp.core.domain.model.Tourism
 import com.dicoding.tourismapp.core.ui.ViewModelFactory
 import com.dicoding.tourismapp.databinding.ActivityDetailTourismBinding
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailTourismActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
     }
-    @Inject
-    lateinit var factory: ViewModelFactory
-    private val detailTourismViewModel: DetailTourismViewModel by viewModels {
-        factory
-    }
+//    hapus kode berikut
+//    @Inject
+//    lateinit var factory: ViewModelFactory
+    private val detailTourismViewModel: DetailTourismViewModel by viewModels()
 
     private lateinit var binding: ActivityDetailTourismBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
+//        hapus kode berikut
+//      (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailTourismBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -52,7 +54,7 @@ class DetailTourismActivity : AppCompatActivity() {
             setStatusFavorite(statusFavorite)
             binding.fab.setOnClickListener {
                 statusFavorite = !statusFavorite
-//                detailTourismViewModel.setFavoriteTourism(detailTourism, statusFavorite)
+                detailTourismViewModel.setFavoriteTourism(detailTourism, statusFavorite)
                 setStatusFavorite(statusFavorite)
             }
         }
