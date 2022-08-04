@@ -17,16 +17,13 @@ class DetailTourismActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_DATA = "extra_data"
     }
-
-    private lateinit var binding: ActivityDetailTourismBinding
-
     @Inject
     lateinit var factory: ViewModelFactory
-
     private val detailTourismViewModel: DetailTourismViewModel by viewModels {
         factory
     }
 
+    private lateinit var binding: ActivityDetailTourismBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -55,7 +52,7 @@ class DetailTourismActivity : AppCompatActivity() {
             setStatusFavorite(statusFavorite)
             binding.fab.setOnClickListener {
                 statusFavorite = !statusFavorite
-                detailTourismViewModel.setFavoriteTourism(detailTourism, statusFavorite)
+//                detailTourismViewModel.setFavoriteTourism(detailTourism, statusFavorite)
                 setStatusFavorite(statusFavorite)
             }
         }
