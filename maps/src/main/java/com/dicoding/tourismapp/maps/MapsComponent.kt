@@ -1,6 +1,7 @@
 package com.dicoding.tourismapp.maps
 
 import android.content.Context
+import com.dicoding.tourismapp.di.MapsModuleDependencies
 import dagger.BindsInstance
 import dagger.Component
 

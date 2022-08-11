@@ -7,13 +7,29 @@ import androidx.activity.viewModels
 import com.dicoding.tourismapp.core.data.Resource
 import com.dicoding.tourismapp.maps.databinding.ActivityMapsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class MapsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMapsBinding
-    private val mapsViewModel: MapsViewModel by viewModels()
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val mapsViewModel: MapsViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerMapsComponent.builder()
+            .context(this)
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    applicationContext,
+                    MapsModuleDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
