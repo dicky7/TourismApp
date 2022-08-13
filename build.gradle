@@ -26,8 +26,12 @@ buildscript {
     ext.activity_ktx_version = "1.1.0"
     ext.fragment_ktx_version = '1.2.5'
 
+    //hilt
     ext.hilt_version = '2.36'
     ext.hilt_jetpack_version = '1.0.0-alpha03'
+
+    //lottie
+    ext.lottie_version = "3.4.1"
 
     repositories {
         google()
