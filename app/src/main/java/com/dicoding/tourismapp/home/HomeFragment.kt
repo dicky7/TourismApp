@@ -15,6 +15,7 @@ import com.dicoding.tourismapp.databinding.FragmentHomeBinding
 import com.dicoding.tourismapp.detail.DetailTourismActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -87,7 +88,11 @@ class HomeFragment : Fragment() {
             binding.btnCrashlytics.setOnClickListener {
                 FirebaseCrashlytics.getInstance().log("Clicked on button")
                 FirebaseCrashlytics.getInstance().setCustomKey("str_key", "some_data")
-                throw RuntimeException("Crashlytics Test")
+                try {
+                    throw RuntimeException("Test Crash")
+                } catch (e: Exception) {
+                    Timber.e("Test non fatal exception")
+                }
             }
         }
     }
