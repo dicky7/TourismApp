@@ -13,6 +13,7 @@ import com.dicoding.tourismapp.core.data.Resource
 import com.dicoding.tourismapp.core.ui.TourismAdapter
 import com.dicoding.tourismapp.databinding.FragmentHomeBinding
 import com.dicoding.tourismapp.detail.DetailTourismActivity
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,27 +58,36 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
 
-            homeViewModel.tourism.observe(viewLifecycleOwner, { tourism ->
+            homeViewModel.tourism.observe(viewLifecycleOwner) { tourism ->
                 if (tourism != null) {
                     when (tourism) {
-                        is com.dicoding.tourismapp.core.data.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is com.dicoding.tourismapp.core.data.Resource.Success -> {
+                        is Resource.Loading -> binding.progressBar.visibility =
+                            View.VISIBLE
+                        is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             tourismAdapter.setData(tourism.data)
                         }
-                        is com.dicoding.tourismapp.core.data.Resource.Error -> {
+                        is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
-                            binding.viewError.tvError.text = tourism.message ?: getString(R.string.something_wrong)
+                            binding.viewError.tvError.text =
+                                tourism.message ?: getString(R.string.something_wrong)
                         }
                     }
                 }
-            })
+            }
 
             with(binding.rvTourism) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = tourismAdapter
+            }
+
+            //for test Crashlytics firebase
+            binding.btnCrashlytics.setOnClickListener {
+                FirebaseCrashlytics.getInstance().log("Clicked on button")
+                FirebaseCrashlytics.getInstance().setCustomKey("str_key", "some_data")
+                throw RuntimeException("Crashlytics Test")
             }
         }
     }
