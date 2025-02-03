@@ -13,15 +13,14 @@ import com.dicoding.tourismapp.core.data.Resource
 import com.dicoding.tourismapp.core.ui.TourismAdapter
 import com.dicoding.tourismapp.databinding.FragmentHomeBinding
 import com.dicoding.tourismapp.detail.DetailTourismActivity
+import com.dicoding.tourismapp.utils.InterstitialAdManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-//    hapus kode berikut
-//    @Inject
-//    lateinit var factory: ViewModelFactory
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -31,31 +30,38 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        MobileAds.initialize(requireActivity()) {}
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-//    hapus kode berikut
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (requireActivity().application as MyApplication).appComponent.inject(this)
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val interstitialAdManager = InterstitialAdManager(requireContext())
+        val banner1Request = AdRequest.Builder().build()
+
+        interstitialAdManager.loadAd(
+            adUnitId = "ca-app-pub-3940256099942544/1033173712",
+            onAdLoaded = {
+                // Ad is ready to show
+            }
+        )
 
         if (activity != null) {
-
-//            hapus kode berikut
-//            val factory = ViewModelFactory.getInstance(requireActivity())
-//            val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-
             val tourismAdapter = TourismAdapter()
             tourismAdapter.onItemClick = { selectedData ->
-                val intent = Intent(activity, DetailTourismActivity::class.java)
-                intent.putExtra(DetailTourismActivity.EXTRA_DATA, selectedData)
-                startActivity(intent)
+                if (interstitialAdManager.isAdLoaded()) {
+                    interstitialAdManager.showAd(
+                        activity = requireActivity(),
+                        onAdDismissed = {
+                            val intent = Intent(activity, DetailTourismActivity::class.java)
+                            intent.putExtra(DetailTourismActivity.EXTRA_DATA, selectedData)
+                            startActivity(intent)
+                        }
+                    )
+                }
             }
 
             homeViewModel.tourism.observe(viewLifecycleOwner) { tourism ->
@@ -89,6 +95,8 @@ class HomeFragment : Fragment() {
                 FirebaseCrashlytics.getInstance().setCustomKey("str_key", "some_data")
                 throw RuntimeException("Crashlytics Test")
             }
+
+            binding.banner1.loadAd(banner1Request)
         }
     }
 

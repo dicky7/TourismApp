@@ -60,6 +60,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-analytics-ktx:17.4.3")
     implementation ("com.google.firebase:firebase-crashlytics:17.1.0")
 
+    implementation (libs.play.services.ads)
+    api (libs.firebase.core)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 }
