@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MapsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMapsBinding
 

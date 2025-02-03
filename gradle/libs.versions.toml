@@ -21,7 +21,8 @@ androidDatabaseSqlcipher = "4.5.4"
 sqliteKtx = "2.4.0"
 lottie = "6.4.1"
 shimmer = "0.5.0"
-mapbox = "11.6.1"
+mapbox = "11.9.1"
+hilt = "2.52"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,8 @@ androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sq
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 mapbox-maps-android = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -56,4 +59,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 

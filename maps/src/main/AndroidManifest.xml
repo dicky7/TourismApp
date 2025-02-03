@@ -4,7 +4,8 @@
     package="com.dicoding.tourismapp.maps">
 
     <application>
-        <activity android:name=".MapsActivity">
+        <activity android:name=".MapsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

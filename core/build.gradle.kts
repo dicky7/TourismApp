@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
+    id("kotlin-kapt")  // Required for Dagger Hilt
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -42,6 +44,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +70,7 @@ dependencies {
 
     implementation(libs.android.database.sqlcipher)
     implementation(libs.androidx.sqlite.ktx)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }

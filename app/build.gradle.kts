@@ -1,20 +1,25 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    alias(libs.plugins.ksp)
+    id("kotlin-kapt")  // Required for Dagger Hilt
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.dicoding.tourismapp"
     compileSdk = 34
+
     defaultConfig {
         applicationId = "com.dicoding.tourismapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
 
     buildTypes {
         release {
@@ -54,4 +59,7 @@ dependencies {
     //firebase crashlytics
     implementation ("com.google.firebase:firebase-analytics-ktx:17.4.3")
     implementation ("com.google.firebase:firebase-crashlytics:17.1.0")
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }

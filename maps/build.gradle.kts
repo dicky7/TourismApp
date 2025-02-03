@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
+    id("kotlin-kapt")  // Required for Dagger Hilt
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -17,14 +19,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures {
         viewBinding = true
     }
 }
-
 dependencies {
     implementation(project(":core"))
     implementation(project(":app"))
     implementation(libs.mapbox.maps.android)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }
